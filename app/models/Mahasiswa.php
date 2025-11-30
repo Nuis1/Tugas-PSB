@@ -12,6 +12,7 @@ class Mahasiswa
     public $tanggal_lahir;
     public $email;
     public $foto_profile;
+    public $status;
 
     public function __construct($db)
     {
@@ -51,13 +52,14 @@ class Mahasiswa
     }
 
     // Tambah data mahasiswa baru
-    public function create() {
+    public function create()
+    {
         $query = "INSERT INTO " . $this->table_name . " 
                   (nim, nama, prodi, semester, tanggal_lahir, email, foto_profile ) 
                   VALUES (:nim, :nama, :prodi, :semester, :tanggal_lahir, :email, :foto_profile)";
-        
+
         $stmt = $this->conn->prepare($query);
-        
+
         // Sanitasi input
         $this->nim = htmlspecialchars(strip_tags($this->nim));
         $this->nama = htmlspecialchars(strip_tags($this->nama));
@@ -66,7 +68,7 @@ class Mahasiswa
         $this->tanggal_lahir = htmlspecialchars(strip_tags($this->tanggal_lahir));
         $this->email = htmlspecialchars(strip_tags($this->email));
         $this->foto_profile = htmlspecialchars(strip_tags($this->foto_profile));
-        
+
         // Bind parameter
         $stmt->bindParam(':nim', $this->nim);
         $stmt->bindParam(':nama', $this->nama);
@@ -75,12 +77,50 @@ class Mahasiswa
         $stmt->bindParam(':tanggal_lahir', $this->tanggal_lahir);
         $stmt->bindParam(':email', $this->email);
         $stmt->bindParam(':foto_profile', $this->foto_profile);
-        
-        if($stmt->execute()) {
+
+        if ($stmt->execute()) {
             return true;
         }
         return false;
+    }
+    //update data mahasiswa
+    public function update()
+    {
+        $query = "UPDATE " . $this->table_name . " SET
+                nim = :nim,
+                nama = :nama,
+                prodi = :prodi,
+                semester = :semester,
+                tanggal_lahir = :tanggal_lahir,
+                email = :email,
+                foto_profile = :foto_profile,
+                status = :status
+              WHERE id_mahasiswa = :id";
 
-        // Update data Mahasiswa
+        $stmt = $this->conn->prepare($query);
+
+        $stmt->bindParam(':id', $this->id);
+        $stmt->bindParam(':nim', $this->nim);
+        $stmt->bindParam(':nama', $this->nama);
+        $stmt->bindParam(':prodi', $this->prodi);
+        $stmt->bindParam(':semester', $this->semester);
+        $stmt->bindParam(':tanggal_lahir', $this->tanggal_lahir);
+        $stmt->bindParam(':email', $this->email);
+        $stmt->bindParam(':foto_profile', $this->foto_profile);
+        $stmt->bindParam(':status', $this->status);
+
+
+        return $stmt->execute();
+    }
+
+    //delete mahasiswa
+    public function delete($id)
+    {
+        $query = "DELETE FROM " . $this->table_name . " WHERE id_mahasiswa = :id";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+
+        return $stmt->execute();
     }
 }

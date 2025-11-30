@@ -109,14 +109,8 @@
 
 <body>
     <div class="container">
-        <h1>➕ Tambah Mahasiswa</h1>
+        <h1>📝 Update Mahasiswa</h1>
         <p class="subtitle">Sistem Informasi Universitas</p>
-
-        <?php if (isset($_GET['error'])): ?>
-            <div class="error">
-                ✗ Gagal menambahkan data. Pastikan NIM belum terdaftar.
-            </div>
-        <?php endif; ?>
 
         <?php if (isset($_GET['error'])): ?>
             <div style="color: red; font-weight: bold;">
@@ -129,46 +123,57 @@
             </div>
         <?php endif; ?>
 
-        <form action="index.php?action=store" method="POST" enctype="multipart/form-data">
+        <form action="index.php?action=update" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<?php echo $mahasiswa['id_mahasiswa']; ?>">
+            <input type="hidden" name="foto_lama" value="<?php echo $mahasiswa['foto_profile']; ?>">
             <div class="form-group">
                 <label for="nim">NIM *</label>
-                <input type="text" id="nim" name="nim" required placeholder="Contoh: 2024001">
+                <input type="text" id="nim" name="nim" value="<?php echo $mahasiswa['nim']; ?>" required placeholder="Contoh: 2024001">
             </div>
 
             <div class="form-group">
                 <label for="nama">Nama Lengkap *</label>
-                <input type="text" id="nama" name="nama" required placeholder="Contoh: Ahmad Fauzi">
+                <input type="text" id="nama" name="nama" value="<?php echo $mahasiswa['nama']; ?>" required placeholder="Contoh: Ahmad Fauzi">
             </div>
 
             <div class="form-group">
                 <label for="prodi">Jurusan *</label>
                 <select id="prodi" name="prodi" required>
                     <option value="">-- Pilih Jurusan --</option>
-                    <option value="TI">Teknik Informatika (TI)</option>
-                    <option value="SI">Sistem Informasi (SI)</option>
-                    <option value="MI">Manajemen Informatika (MI)</option>
-                    <option value="MI">Bisnis Digital (BD)</option>
+                    <option value="TI" <?= ($mahasiswa['prodi'] == 'TI') ? 'selected' : '' ?>>Teknik Informatika (TI)</option>
+                    <option value="SI" <?= ($mahasiswa['prodi'] == 'SI') ? 'selected' : '' ?>>Sistem Informasi (SI)</option>
+                    <option value="MI" <?= ($mahasiswa['prodi'] == 'MI') ? 'selected' : '' ?>>Manajemen Informatika (MI)</option>
+                    <option value="BD" <?= ($mahasiswa['prodi'] == 'BD') ? 'selected' : '' ?>>Bisnis Digital (BD)</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label for="semester">Semester *</label>
-                <input type="number" id="semester" name="semester" required placeholder="Contoh: 1" min="1" max="8">
+                <input type="number" id="semester" name="semester" value="<?php echo $mahasiswa['semester']; ?>" required placeholder="Contoh: 1" min="1" max="8">
             </div>
 
             <div class="form-group">
                 <label for="tanggal_lahir">Tanggal Lahir *</label>
-                <input type="date" id="tanggal_lahir" name="tanggal_lahir" required>
+                <input type="date" id="tanggal_lahir" value="<?php echo $mahasiswa['tanggal_lahir']; ?>" name="tanggal_lahir" required>
             </div>
 
             <div class="form-group">
                 <label for="email">Email *</label>
-                <input type="text" id="email" name="email" required placeholder="Contoh: nuis2321@gmail.com">
+                <input type="email" id="email" name="email" value="<?php echo $mahasiswa['email']; ?>" required placeholder="Contoh: nuis2321@gmail.com">
             </div>
 
             <div class="form-group">
                 <label for="foto_profile">Foto Profile *</label>
                 <input type="file" id="foto_profile" name="foto_profile" accept="image/*">
+            </div>
+
+            <div class="form-group">
+                <label for="status">Status *</label>
+                <select id="status" name="status" required>
+                    <option value="">-- Pilih Status --</option>
+                    <option value="aktif" <?= ($mahasiswa['status'] == 'aktif') ? 'selected' : '' ?>>Aktif</option>
+                    <option value="tidak aktif" <?= ($mahasiswa['status'] == 'tidak aktif') ? 'selected' : '' ?>>Tidak Aktif</option>
+                </select>
             </div>
 
             <div class="btn-group">

@@ -199,8 +199,12 @@
                                 </a>
                             </td>
                             <td>
-                                <a href="index.php?action=update&id=<?php echo $row['id_mahasiswa'] ?>"><span class="update-btn">Update</span></a>
-                                <span class="delete-btn">Delete</span>
+                                <a href="index.php?action=edit&id=<?= $row['id_mahasiswa']; ?>"><span class="update-btn">Update</span></a>
+                                <a href="index.php?action=delete&id=<?php echo $row['id_mahasiswa']; ?>"
+                                    onclick="return confirm('Yakin ingin menghapus data ini?');">
+                                    <span class="delete-btn">Delete</span>
+                                </a>
+
                             </td>
                         </tr>
                     <?php endforeach; ?>
