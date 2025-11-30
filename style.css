@@ -1,0 +1,20 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+table,
+th,
+td {
+    border: 1px solid #000;
+    border-collapse: collapse;
+    padding: 8px;
+}
+
+.images img{
+    width: 100px ;
+    height: 100px;
+    border-radius: 100px;
+}
